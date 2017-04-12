@@ -21,3 +21,15 @@ def test_plugin_registers():
     """
     register()
     assert is_receiver_registered(fancybox_plugin)
+
+def test_article_generator_return_article():
+    for article in article_generator():
+        assert hasattr(article, 'content')
+
+class Article(object):
+    "A simple Article class"
+    content = ""
+
+def article_generator():
+    "Article generator"
+    yield Article()
