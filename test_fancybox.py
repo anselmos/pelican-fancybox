@@ -3,6 +3,14 @@ FancyBox unittests
 """
 from pelican import signals
 
+class Article(object):
+    "A simple Article class"
+    content = ""
+
+def article_generator():
+    "Article generator"
+    yield Article()
+
 def fancybox_plugin():
     "Fanxybox plugin - temporary code placement"
     pass
@@ -23,13 +31,12 @@ def test_plugin_registers():
     assert is_receiver_registered(fancybox_plugin)
 
 def test_article_generator_return_article():
+    """
+    Checks if generator return article
+    """
+    assert isinstance(article_generator().next(), Article)
+
+def test_given_article_generator_check_article_content_exists():
+    "Checks if article content field exists in article"
     for article in article_generator():
         assert hasattr(article, 'content')
-
-class Article(object):
-    "A simple Article class"
-    content = ""
-
-def article_generator():
-    "Article generator"
-    yield Article()
