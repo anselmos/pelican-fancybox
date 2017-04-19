@@ -42,6 +42,12 @@ def test_given_article_generator_check_article_content_exists():
     for article in article_generator():
         assert hasattr(article, 'content')
 
+def find_fancybox_element(article):
+    found = None
+    for content_line in article.content.split("\n"):
+        if "<fancybox>" in content_line:
+            found = content_line
+    return found
 
 def test_given_article_with_fancybox_find_fancybox_element():
     article = Article('Data data data\n <fancybox>TEST</fancybox>\ndata data data')
