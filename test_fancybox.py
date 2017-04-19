@@ -5,7 +5,8 @@ from pelican import signals
 
 class Article(object):
     "A simple Article class"
-    content = ""
+    def __init__(self, content = ""):
+        self.content = content
 
 def article_generator():
     "Article generator"
@@ -13,7 +14,7 @@ def article_generator():
 
 def fancybox_plugin():
     "Fanxybox plugin - temporary code placement"
-    pass
+    print "plugin"
 
 def register():
     "Registers plugin"
@@ -40,3 +41,8 @@ def test_given_article_generator_check_article_content_exists():
     "Checks if article content field exists in article"
     for article in article_generator():
         assert hasattr(article, 'content')
+
+
+def test_given_article_with_fancybox_find_fancybox_element():
+    article = Article('Data data data\n <fancybox>TEST</fancybox>\ndata data data')
+    assert find_fancybox_element(article)
