@@ -7,7 +7,7 @@ from fancybox import Article
 from fancybox import find_fancybox_element
 from fancybox import fancybox_plugin
 
-def article_generator():
+def mock_article_generator():
     "Article generator"
     yield Article()
 
@@ -26,11 +26,11 @@ def test_article_generator_return_article():
     """
     Checks if generator return article
     """
-    assert isinstance(article_generator().next(), Article)
+    assert isinstance(mock_article_generator().next(), Article)
 
 def test_given_article_generator_check_article_content_exists():
     "Checks if article content field exists in article"
-    for article in article_generator():
+    for article in mock_article_generator():
         assert hasattr(article, 'content')
 
 def test_given_article_with_fancybox_find_fancybox_element():
