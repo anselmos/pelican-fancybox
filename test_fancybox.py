@@ -2,23 +2,14 @@
 FancyBox unittests
 """
 from pelican import signals
-
-class Article(object):
-    "A simple Article class"
-    def __init__(self, content = ""):
-        self.content = content
+from fancybox import register
+from fancybox import Article
+from fancybox import find_fancybox_element
+from fancybox import fancybox_plugin
 
 def article_generator():
     "Article generator"
     yield Article()
-
-def fancybox_plugin():
-    "Fanxybox plugin - temporary code placement"
-    print "plugin"
-
-def register():
-    "Registers plugin"
-    signals.article_generator_finalized.connect(fancybox_plugin)
 
 def assert_receiver_registered(receiver_name):
     'Checks if receiver is registered to signals generator'
@@ -42,13 +33,7 @@ def test_given_article_generator_check_article_content_exists():
     for article in article_generator():
         assert hasattr(article, 'content')
 
-def find_fancybox_element(article):
-    found = None
-    for content_line in article.content.split("\n"):
-        if "<fancybox>" in content_line:
-            found = content_line
-    return found
-
 def test_given_article_with_fancybox_find_fancybox_element():
+    "Checks for finding fancybox element in article"
     article = Article('Data data data\n <fancybox>TEST</fancybox>\ndata data data')
     assert find_fancybox_element(article)
