@@ -34,6 +34,8 @@ def replace(article):
     for fancybox in elements_fancybox:
         fancybox.name = TAG_REPLACEMENT
         fancybox['class'] = CLASS_SELECTOR
+        fancybox['href'] = fancybox.text
+        fancybox.append( BeautifulSoup("", "html.parser").new_tag("img", href=fancybox.string) )
     return str(soup)
 
 def add_dependency(article):

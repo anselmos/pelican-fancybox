@@ -51,7 +51,7 @@ def test_given_article_with_fancybox_replace():
     "Checks if Replace method makes replacement of <fancybox></fancybox>element into <a class='fancybox_group'></a> "
 
     article = Article('Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
-    expected = 'Data data data\n <a class="{}">TEST</a>\ndata data data'.format(CLASS_SELECTOR)
+    expected = 'Data data data\n <a class="{}" href="TEST">TEST<img href="TEST"/></a>\ndata data data'.format(CLASS_SELECTOR)
     assert_replace(article, expected)
 
 def test_given_multiple_fancybox_elements_in_article_replace():
@@ -59,7 +59,7 @@ def test_given_multiple_fancybox_elements_in_article_replace():
 
     article = Article('Data data data\n <{}>TEST</{}>\ndata <{}>TEST</{}>data <{}>TEST</{}>data'.format(FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME))
 
-    expected = 'Data data data\n <a class="{}">TEST</a>\ndata <a class="{}">TEST</a>data <a class="{}">TEST</a>data'.format(CLASS_SELECTOR, CLASS_SELECTOR, CLASS_SELECTOR)
+    expected = 'Data data data\n <a class="{}" href="TEST">TEST<img href="TEST"/></a>\ndata <a class="{}" href="TEST">TEST<img href="TEST"/></a>data <a class="{}" href="TEST">TEST<img href="TEST"/></a>data'.format(CLASS_SELECTOR, CLASS_SELECTOR, CLASS_SELECTOR)
 
     assert_replace(article, expected)
 
