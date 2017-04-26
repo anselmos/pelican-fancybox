@@ -7,6 +7,7 @@ from fancybox import Article
 from fancybox import find_fancybox_element
 from fancybox import fancybox_plugin
 from fancybox import FANCYBOXNAME, FANCYBOXNAME_SELECTOR
+from fancybox import replace
 
 
 def mock_article_generator():
@@ -45,4 +46,4 @@ def test_replace():
 
     article = Article('Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
     expected = "Data data data\n <a class='{}'>TEST</a>\ndata data data".format(FANCYBOXNAME_SELECTOR)
-    assert replace(article), expected
+    assert replace(article) == expected

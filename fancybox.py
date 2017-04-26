@@ -19,6 +19,12 @@ def fancybox_plugin(generator):
     "Fanxybox plugin - temporary code placement"
     print find_fancybox_element(generator.articles[0])
 
+def replace(article):
+    "Replaces fancybox tag with <a class='fancybox'></a>"
+
+    found = find_fancybox_element(article)
+    return found
+
 def register():
     "Registers plugin"
     signals.article_generator_finalized.connect(fancybox_plugin)
