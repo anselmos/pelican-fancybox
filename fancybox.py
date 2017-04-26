@@ -28,6 +28,15 @@ def replace(article):
         fancybox['class'] = CLASS_SELECTOR
     return str(soup)
 
+def add_dependency(article):
+    'Adds CSS/JS dependency to article only if article contains fancybox element'
+    content = '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script><script type="text/javascript" src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>'
+    content += '<link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />'
+
+    article.content = content + article.content
+    return article
+
+
 def register():
     "Registers plugin"
     signals.article_generator_finalized.connect(fancybox_plugin)

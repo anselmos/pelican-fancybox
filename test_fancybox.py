@@ -8,6 +8,7 @@ from fancybox import find_fancybox_element
 from fancybox import fancybox_plugin
 from fancybox import FANCYBOXNAME, CLASS_SELECTOR
 from fancybox import replace
+from fancybox import add_dependency
 
 
 def mock_article_generator():
@@ -61,7 +62,7 @@ def test_given_multiple_fancybox_elements_in_article_replace():
 
     assert_replace(article, expected)
 
-def test_given_article_add_dependency_if_fancybox_element_exists():
+def test_given_article_add_dependency():
     "Checks if article contains css element after using 'add_css' function - only if fancybox element exists"
 
     expected_content = '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script><script type="text/javascript" src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>'
@@ -72,4 +73,4 @@ def test_given_article_add_dependency_if_fancybox_element_exists():
 
     expected = Article(expected_content + article_content)
 
-    assert add_dependency(article) == expected
+    assert str(add_dependency(article).content) == str(expected.content)
