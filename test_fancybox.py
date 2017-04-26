@@ -41,12 +41,16 @@ def test_given_article_with_fancybox_find_fancybox_element():
     article = Article('Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
     assert find_fancybox_element(article)
 
+def assert_replace(article, expected):
+    "Asserts replace equals expected"
+    assert replace(article) == expected
+
 def test_given_article_with_fancybox_replace():
     "Checks if Replace method makes replacement of <fancybox></fancybox>element into <a class='fancybox_group'></a> "
 
     article = Article('Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
     expected = 'Data data data\n <a class="{}">TEST</a>\ndata data data'.format(CLASS_SELECTOR)
-    assert replace(article) == expected
+    assert_replace(article, expected)
 
 def test_given_multiple_fancybox_elements_in_article_replace():
     "Checks if multiple fancybox elements will be replaced with fancybox-type engine element"
@@ -55,4 +59,4 @@ def test_given_multiple_fancybox_elements_in_article_replace():
 
     expected = 'Data data data\n <a class="{}">TEST</a>\ndata <a class="{}">TEST</a>data <a class="{}">TEST</a>data'.format(CLASS_SELECTOR, CLASS_SELECTOR, CLASS_SELECTOR)
 
-    assert replace(article) == expected
+    assert_replace(article, expected)
