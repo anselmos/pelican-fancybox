@@ -74,3 +74,15 @@ def test_given_article_add_dependency():
     expected = Article(expected_content + article_content)
 
     assert str(add_dependency(article).content) == str(expected.content)
+
+def test_given_article_add_binding_fancyboxscript():
+    "Checks if article contains javascript binding between name of class and fancybox script"
+    article_content = 'Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME)
+    expected_content = article_content
+    expected_content += "<script>"
+    expected_content += """$(document).ready(function() {\n$("a.fancybox").fancybox({\n 'hideOnContentClick': true\n});\n});"""
+    expected_content += "</script>"
+
+    article = Article(article_content)
+    expected = Article(expected_content)
+    assert str(add_binding_fancyboxscript(article).content) == str(expected.content)
