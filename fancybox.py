@@ -2,7 +2,8 @@ from pelican import signals
 from bs4 import BeautifulSoup
 
 FANCYBOXNAME = "fancybox"
-FANCYBOXNAME_SELECTOR = "fancybox"
+CLASS_SELECTOR = "fancybox"
+TAG_REPLACEMENT = 'a'
 
 class Article(object):
     "A simple Article class"
@@ -23,8 +24,8 @@ def replace(article):
 
     elements_fancybox, soup = find_fancybox_element(article)
     for fancybox in elements_fancybox:
-        fancybox.name = 'a'
-        fancybox['class'] = 'fancybox'
+        fancybox.name = TAG_REPLACEMENT
+        fancybox['class'] = CLASS_SELECTOR
     return str(soup)
 
 def register():
