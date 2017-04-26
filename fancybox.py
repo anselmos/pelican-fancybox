@@ -3,7 +3,12 @@ from bs4 import BeautifulSoup
 
 FANCYBOXNAME = "fancybox"
 CLASS_SELECTOR = "fancybox"
-TAG_REPLACEMENT = 'a'
+TAG_REPLACEMENT = "a"
+DEPS_JS_JQUERY_URL = "http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"
+DEPS_JS_FANCYBOX_URL = "fancybox/jquery.fancybox-1.3.4.pack.js"
+DEPS_CSS_FANXYBOX_URL = "fancybox/jquery.fancybox-1.3.4.css"
+
+JS_BIDING_CONTENT = '$(document).ready(function() {$("a.'+CLASS_SELECTOR+'").fancybox({\'hideOnContentClick\': true});});'
 
 class Article(object):
     "A simple Article class"
@@ -33,8 +38,17 @@ def replace(article):
 
 def add_dependency(article):
     'Adds CSS/JS dependency to article only if article contains fancybox element'
-    content = '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script><script type="text/javascript" src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>'
-    content += '<link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />'
+    script_tag = BeautifulSoup("", "html.parser").new_tag("script", type="text/javascript", src="")
+    css_tag = BeautifulSoup("", "html.parser").new_tag("link", rel="stylesheet", type="text/css", href="", media="screen")
+    script_tag['src'] = DEPS_JS_JQUERY_URL
+
+    content = str(script_tag)
+
+    script_tag['src'] = DEPS_JS_FANCYBOX_URL
+    content += str(script_tag)
+
+    css_tag['href'] = DEPS_CSS_FANXYBOX_URL
+    content += str(css_tag)
 
     article._content = content + article._content
     return article
@@ -42,7 +56,7 @@ def add_dependency(article):
 def add_binding_fancyboxscript(article):
     "Adds biding for fancybox script with class selector"
     binding = "<script>"
-    binding += """$(document).ready(function() {\n$("a.fancybox").fancybox({\n 'hideOnContentClick': true\n});\n});"""
+    binding += JS_BIDING_CONTENT
     binding += "</script>"
     article._content = article._content + binding
     return article

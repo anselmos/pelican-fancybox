@@ -66,8 +66,8 @@ def test_given_multiple_fancybox_elements_in_article_replace():
 def test_given_article_add_dependency():
     "Checks if article contains css element after using 'add_css' function - only if fancybox element exists"
 
-    expected_content = '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script><script type="text/javascript" src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>'
-    expected_content += '<link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />'
+    expected_content = '<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script><script src="fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>'
+    expected_content += '<link href="fancybox/jquery.fancybox-1.3.4.css" media="screen" rel="stylesheet" type="text/css"/>'
 
     article_content = 'Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME)
     article = Article(article_content)
@@ -81,7 +81,7 @@ def test_given_article_add_binding_fancyboxscript():
     article_content = 'Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME)
     expected_content = article_content
     expected_content += "<script>"
-    expected_content += """$(document).ready(function() {\n$("a.fancybox").fancybox({\n 'hideOnContentClick': true\n});\n});"""
+    expected_content += """$(document).ready(function() {$("a.fancybox").fancybox({'hideOnContentClick': true});});"""
     expected_content += "</script>"
 
     article = Article(article_content)
