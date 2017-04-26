@@ -60,3 +60,16 @@ def test_given_multiple_fancybox_elements_in_article_replace():
     expected = 'Data data data\n <a class="{}">TEST</a>\ndata <a class="{}">TEST</a>data <a class="{}">TEST</a>data'.format(CLASS_SELECTOR, CLASS_SELECTOR, CLASS_SELECTOR)
 
     assert_replace(article, expected)
+
+def test_given_article_add_dependency_if_fancybox_element_exists():
+    "Checks if article contains css element after using 'add_css' function - only if fancybox element exists"
+
+    expected_content = '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script><script type="text/javascript" src="/fancybox/jquery.fancybox-1.3.4.pack.js"></script>'
+    expected_content += '<link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.4.css" type="text/css" media="screen" />'
+
+    article_content = 'Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME)
+    article = Article(article_content)
+
+    expected = Article(expected_content + article_content)
+
+    assert add_dependency(article) == expected
