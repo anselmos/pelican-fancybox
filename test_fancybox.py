@@ -9,6 +9,7 @@ from fancybox import fancybox_plugin
 from fancybox import FANCYBOXNAME, CLASS_SELECTOR
 from fancybox import replace
 from fancybox import add_dependency
+from fancybox import add_binding_fancyboxscript
 
 
 def mock_article_generator():
@@ -35,7 +36,7 @@ def test_article_generator_return_article():
 def test_given_article_generator_check_article_content_exists():
     "Checks if article content field exists in article"
     for article in mock_article_generator():
-        assert hasattr(article, 'content')
+        assert hasattr(article, '_content')
 
 def test_given_article_with_fancybox_find_fancybox_element():
     "Checks for finding fancybox element in article"
@@ -73,7 +74,7 @@ def test_given_article_add_dependency():
 
     expected = Article(expected_content + article_content)
 
-    assert str(add_dependency(article).content) == str(expected.content)
+    assert str(add_dependency(article)._content) == str(expected._content)
 
 def test_given_article_add_binding_fancyboxscript():
     "Checks if article contains javascript binding between name of class and fancybox script"
@@ -85,4 +86,4 @@ def test_given_article_add_binding_fancyboxscript():
 
     article = Article(article_content)
     expected = Article(expected_content)
-    assert str(add_binding_fancyboxscript(article).content) == str(expected.content)
+    assert str(add_binding_fancyboxscript(article)._content) == str(expected._content)

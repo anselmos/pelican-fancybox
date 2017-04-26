@@ -1,2 +1,2 @@
 test:
-	pytest test_fancybox.py
+	pytest -v test_fancybox.py
