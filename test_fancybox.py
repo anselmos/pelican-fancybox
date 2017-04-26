@@ -6,7 +6,8 @@ from fancybox import register
 from fancybox import Article
 from fancybox import find_fancybox_element
 from fancybox import fancybox_plugin
-from fancybox import FANCYBOXNAME
+from fancybox import FANCYBOXNAME, FANCYBOXNAME_SELECTOR
+
 
 def mock_article_generator():
     "Article generator"

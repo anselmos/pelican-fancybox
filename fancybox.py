@@ -1,6 +1,7 @@
 from pelican import signals
 
 FANCYBOXNAME = "fancybox"
+FANCYBOXNAME_SELECTOR = "fancybox"
 
 class Article(object):
     "A simple Article class"
