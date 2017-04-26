@@ -1,5 +1,7 @@
 from pelican import signals
 
+FANCYBOXNAME = "fancybox"
+
 class Article(object):
     "A simple Article class"
     def __init__(self, content = ""):
@@ -8,7 +10,7 @@ class Article(object):
 def find_fancybox_element(article):
     found = None
     for content_line in article.content.split("\n"):
-        if "<fancybox>" in content_line:
+        if "<{}>".format(FANCYBOXNAME) in content_line:
             found = content_line
     return found
 

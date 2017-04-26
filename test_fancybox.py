@@ -6,6 +6,7 @@ from fancybox import register
 from fancybox import Article
 from fancybox import find_fancybox_element
 from fancybox import fancybox_plugin
+from fancybox import FANCYBOXNAME
 
 def mock_article_generator():
     "Article generator"
@@ -35,5 +36,5 @@ def test_given_article_generator_check_article_content_exists():
 
 def test_given_article_with_fancybox_find_fancybox_element():
     "Checks for finding fancybox element in article"
-    article = Article('Data data data\n <fancybox>TEST</fancybox>\ndata data data')
+    article = Article('Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
     assert find_fancybox_element(article)
