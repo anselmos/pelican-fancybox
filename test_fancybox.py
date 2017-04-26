@@ -47,3 +47,12 @@ def test_given_article_with_fancybox_replace():
     article = Article('Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
     expected = 'Data data data\n <a class="{}">TEST</a>\ndata data data'.format(CLASS_SELECTOR)
     assert replace(article) == expected
+
+def test_given_multiple_fancybox_elements_in_article_replace():
+    "Checks if multiple fancybox elements will be replaced with fancybox-type engine element"
+
+    article = Article('Data data data\n <{}>TEST</{}>\ndata <{}>TEST</{}>data <{}>TEST</{}>data'.format(FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME))
+
+    expected = 'Data data data\n <a class="{}">TEST</a>\ndata <a class="{}">TEST</a>data <a class="{}">TEST</a>data'.format(CLASS_SELECTOR, CLASS_SELECTOR, CLASS_SELECTOR)
+
+    assert replace(article) == expected
