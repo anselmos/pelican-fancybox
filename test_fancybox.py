@@ -41,7 +41,7 @@ def test_given_article_with_fancybox_find_fancybox_element():
     article = Article('Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
     assert find_fancybox_element(article)
 
-def test_replace():
+def test_given_article_with_fancybox_replace():
     "Checks if Replace method makes replacement of <fancybox></fancybox>element into <a class='fancybox_group'></a> "
 
     article = Article('Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
