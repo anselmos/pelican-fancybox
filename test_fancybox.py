@@ -63,6 +63,13 @@ def test_given_multiple_fancybox_elements_in_article_replace():
 
     assert_replace(article, expected)
 
+def test_no_fancybox_element_in_article_no_replacing():
+    "Check if no fancybox element in article, no elements in article will be replaced"
+    article = Article('Data data data\n <a href="URL">TEST</a>\ndata data data')
+    expected = 'Data data data\n <a href="URL">TEST</a>\ndata data data'
+    assert_replace(article, expected)
+
+
 def assert_dependency(actual, expected):
     "add_dependency assertion"
     assert str(add_dependency(actual)._content) == str(expected._content)
