@@ -6,7 +6,7 @@ from fancybox import register
 from fancybox import Article
 from fancybox import find_fancybox_element
 from fancybox import fancybox_plugin
-from fancybox import FANCYBOXNAME, CLASS_SELECTOR
+from fancybox import FANCYBOXNAME, CLASS_SELECTOR, DEPS_JS_JQUERY_URL, DEPS_JS_FANCYBOX_URL, DEPS_CSS_FANXYBOX_URL
 from fancybox import replace
 from fancybox import add_dependency
 from fancybox import add_binding_fancyboxscript
@@ -50,24 +50,25 @@ def assert_replace(article, expected):
 def test_given_article_with_fancybox_replace():
     "Checks if Replace method makes replacement of <fancybox></fancybox>element into <a class='fancybox_group'></a> "
 
-    article = Article('Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
-    expected = 'Data data data\n <a class="{}" href="TEST">TEST<img href="TEST"/></a>\ndata data data'.format(CLASS_SELECTOR)
+    article = Article('Data data data\n <{} href="URL">TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
+    expected = 'Data data data\n <a class="{}" href="URL">TEST</a>\ndata data data'.format(CLASS_SELECTOR)
     assert_replace(article, expected)
 
 def test_given_multiple_fancybox_elements_in_article_replace():
     "Checks if multiple fancybox elements will be replaced with fancybox-type engine element"
 
-    article = Article('Data data data\n <{}>TEST</{}>\ndata <{}>TEST</{}>data <{}>TEST</{}>data'.format(FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME))
+    article = Article('Data data data\n <{} href="URL1">TEST</{}>\ndata <{} href="URL2">TEST2</{}>data <{} href="URL3">TEST3</{}>data'.format(FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME, FANCYBOXNAME))
 
-    expected = 'Data data data\n <a class="{}" href="TEST">TEST<img href="TEST"/></a>\ndata <a class="{}" href="TEST">TEST<img href="TEST"/></a>data <a class="{}" href="TEST">TEST<img href="TEST"/></a>data'.format(CLASS_SELECTOR, CLASS_SELECTOR, CLASS_SELECTOR)
+    expected = 'Data data data\n <a class="{}" href="URL1">TEST</a>\ndata <a class="{}" href="URL2">TEST2</a>data <a class="{}" href="URL3">TEST3</a>data'.format(CLASS_SELECTOR, CLASS_SELECTOR, CLASS_SELECTOR)
 
     assert_replace(article, expected)
 
 def test_given_article_add_dependency():
     "Checks if article contains css element after using 'add_css' function - only if fancybox element exists"
 
-    expected_content = '<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script><script src="fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>'
-    expected_content += '<link href="fancybox/jquery.fancybox-1.3.4.css" media="screen" rel="stylesheet" type="text/css"/>'
+    expected_content = '<script src="{}" type="text/javascript"></script>'.format(DEPS_JS_JQUERY_URL)
+    expected_content += '<script src="{}" type="text/javascript"></script>'.format(DEPS_JS_FANCYBOX_URL)
+    expected_content += '<link href="{}" media="screen" rel="stylesheet" type="text/css"/>'.format(DEPS_CSS_FANXYBOX_URL)
 
     article_content = 'Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME)
     article = Article(article_content)

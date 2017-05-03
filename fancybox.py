@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 FANCYBOXNAME = "fancybox"
 CLASS_SELECTOR = "fancybox"
 TAG_REPLACEMENT = "a"
-DEPS_JS_JQUERY_URL = "http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"
-DEPS_JS_FANCYBOX_URL = "fancybox/jquery.fancybox-1.3.4.pack.js"
-DEPS_CSS_FANXYBOX_URL = "fancybox/jquery.fancybox-1.3.4.css"
+DEPS_JS_JQUERY_URL = "http://code.jquery.com/jquery-3.2.1.min.js"
+DEPS_JS_FANCYBOX_URL = "https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.js"
+DEPS_CSS_FANXYBOX_URL = "https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.css"
 
 JS_BIDING_CONTENT = '$(document).ready(function() {$("a.'+CLASS_SELECTOR+'").fancybox({\'hideOnContentClick\': true});});'
 
@@ -26,6 +26,7 @@ def fancybox_plugin(generator):
         article._content = add_dependency(article)._content
         article._content = add_binding_fancyboxscript(article)._content
         article._content = replace(article)
+        # pass
 
 def replace(article):
     "Replaces fancybox tag with <a class='fancybox'></a>"
@@ -34,8 +35,6 @@ def replace(article):
     for fancybox in elements_fancybox:
         fancybox.name = TAG_REPLACEMENT
         fancybox['class'] = CLASS_SELECTOR
-        fancybox['href'] = fancybox.text
-        fancybox.append( BeautifulSoup("", "html.parser").new_tag("img", href=fancybox.string) )
     return str(soup)
 
 def add_dependency(article):
