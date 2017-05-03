@@ -58,6 +58,8 @@ def add_dependency(article):
 
 def add_binding_fancyboxscript(article):
     "Adds biding for fancybox script with class selector"
+    if not find_fancybox_element(article)[0]:
+        return article
     binding = "<script>"
     binding += JS_BIDING_CONTENT
     binding += "</script>"
