@@ -26,7 +26,6 @@ def fancybox_plugin(generator):
         article._content = add_dependency(article)._content
         article._content = add_binding_fancyboxscript(article)._content
         article._content = replace(article)
-        # pass
 
 def replace(article):
     "Replaces fancybox tag with <a class='fancybox'></a>"

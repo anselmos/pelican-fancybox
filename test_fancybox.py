@@ -10,6 +10,7 @@ from fancybox import FANCYBOXNAME, CLASS_SELECTOR, DEPS_JS_JQUERY_URL, DEPS_JS_F
 from fancybox import replace
 from fancybox import add_dependency
 from fancybox import add_binding_fancyboxscript
+from fancybox import fancybox_plugin
 
 
 def mock_article_generator():
@@ -113,3 +114,23 @@ def test_given_no_fancyboxelement_no_add_binding_fancyboxscript():
     article = Article('Data data data data <img src="tralalala"/>')
     expected = Article('Data data data data <img src="tralalala"/>')
     assert str(add_binding_fancyboxscript(article)._content) == str(expected._content)
+
+class MockedGenerator(object):
+
+    def __init__(self, article):
+        self.articles = [article]
+
+def test_fancybox_plugin():
+
+    article = Article('Data data data\n <{} href="URL">TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
+    expected_content = '<script src="{}" type="text/javascript"></script>'.format(DEPS_JS_JQUERY_URL)
+    expected_content += '<script src="{}" type="text/javascript"></script>'.format(DEPS_JS_FANCYBOX_URL)
+    expected_content += '<link href="{}" media="screen" rel="stylesheet" type="text/css"/>'.format(DEPS_CSS_FANXYBOX_URL)
+    expected_content += 'Data data data\n <a class="{}" href="URL">TEST</a>\ndata data data'.format(CLASS_SELECTOR)
+    expected_content += "<script>"
+    expected_content += """$(document).ready(function() {$("a.fancybox").fancybox({'hideOnContentClick': true});});"""
+    expected_content += "</script>"
+    expected = Article(expected_content)
+
+    fancybox_plugin(MockedGenerator(article))
+    assert str(article._content) == str(expected._content)
