@@ -63,6 +63,9 @@ def test_given_multiple_fancybox_elements_in_article_replace():
 
     assert_replace(article, expected)
 
+def assert_dependency(actual, expected):
+    assert str(add_dependency(actual)._content) == str(expected._content)
+
 def test_given_article_add_dependency():
     "Checks if article contains css element after using 'add_css' function - only if fancybox element exists"
 
@@ -75,7 +78,7 @@ def test_given_article_add_dependency():
 
     expected = Article(expected_content + article_content)
 
-    assert str(add_dependency(article)._content) == str(expected._content)
+    assert_dependency(article, expected)
 
 def test_given_article_add_binding_fancyboxscript():
     "Checks if article contains javascript binding between name of class and fancybox script"
@@ -95,5 +98,5 @@ def test_given_article_without_fancybox_no_dependency():
     expected_content = 'Data data data data <img src="tralalala"/>'
     article = Article(article_content)
     expected = Article(expected_content)
-    assert str(add_dependency(article)._content) == str(expected._content)
 
+    assert_dependency(article, expected)
