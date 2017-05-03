@@ -39,6 +39,8 @@ def replace(article):
 
 def add_dependency(article):
     'Adds CSS/JS dependency to article only if article contains fancybox element'
+    if not find_fancybox_element(article)[0]:
+        return article
     script_tag = BeautifulSoup("", "html.parser").new_tag("script", type="text/javascript", src="")
     css_tag = BeautifulSoup("", "html.parser").new_tag("link", rel="stylesheet", type="text/css", href="", media="screen")
     script_tag['src'] = DEPS_JS_JQUERY_URL
