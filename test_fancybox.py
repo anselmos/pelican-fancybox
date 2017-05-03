@@ -64,6 +64,7 @@ def test_given_multiple_fancybox_elements_in_article_replace():
     assert_replace(article, expected)
 
 def assert_dependency(actual, expected):
+    "add_dependency assertion"
     assert str(add_dependency(actual)._content) == str(expected._content)
 
 def test_given_article_add_dependency():
@@ -80,6 +81,15 @@ def test_given_article_add_dependency():
 
     assert_dependency(article, expected)
 
+def test_given_article_without_fancybox_no_dependency():
+    "Checks if article does not contain fancybox element, dependency is not added to content"
+    article_content = 'Data data data data <img src="tralalala"/>'
+    expected_content = 'Data data data data <img src="tralalala"/>'
+    article = Article(article_content)
+    expected = Article(expected_content)
+
+    assert_dependency(article, expected)
+
 def test_given_article_add_binding_fancyboxscript():
     "Checks if article contains javascript binding between name of class and fancybox script"
     article_content = 'Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME)
@@ -91,12 +101,3 @@ def test_given_article_add_binding_fancyboxscript():
     article = Article(article_content)
     expected = Article(expected_content)
     assert str(add_binding_fancyboxscript(article)._content) == str(expected._content)
-
-def test_given_article_without_fancybox_no_dependency():
-    "Checks if article does not contain fancybox element, dependency is not added to content"
-    article_content = 'Data data data data <img src="tralalala"/>'
-    expected_content = 'Data data data data <img src="tralalala"/>'
-    article = Article(article_content)
-    expected = Article(expected_content)
-
-    assert_dependency(article, expected)
