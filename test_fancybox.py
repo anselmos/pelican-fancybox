@@ -88,3 +88,12 @@ def test_given_article_add_binding_fancyboxscript():
     article = Article(article_content)
     expected = Article(expected_content)
     assert str(add_binding_fancyboxscript(article)._content) == str(expected._content)
+
+def test_given_article_without_fancybox_no_dependency():
+    "Checks if article does not contain fancybox element, dependency is not added to content"
+    article_content = 'Data data data data <img src="tralalala"/>'
+    expected_content = 'Data data data data <img src="tralalala"/>'
+    article = Article(article_content)
+    expected = Article(expected_content)
+    assert str(add_dependency(article)._content) == str(expected._content)
+
