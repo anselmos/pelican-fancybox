@@ -69,7 +69,6 @@ def test_no_fancybox_element_in_article_no_replacing():
     expected = 'Data data data\n <a href="URL">TEST</a>\ndata data data'
     assert_replace(article, expected)
 
-
 def assert_dependency(actual, expected):
     "add_dependency assertion"
     assert str(add_dependency(actual)._content) == str(expected._content)
@@ -107,4 +106,10 @@ def test_given_article_add_binding_fancyboxscript():
 
     article = Article(article_content)
     expected = Article(expected_content)
+    assert str(add_binding_fancyboxscript(article)._content) == str(expected._content)
+
+def test_given_no_fancyboxelement_no_add_binding_fancyboxscript():
+    "Expectes not adding fancybox script if no fancybox element found in article"
+    article = Article('Data data data data <img src="tralalala"/>')
+    expected = Article('Data data data data <img src="tralalala"/>')
     assert str(add_binding_fancyboxscript(article)._content) == str(expected._content)
