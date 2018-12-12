@@ -16,9 +16,11 @@ def mock_article_generator():
     "Article generator"
     yield Article()
 
+
 def assert_receiver_registered(receiver_name):
     'Checks if receiver is registered to signals generator'
     assert signals.article_generator_finalized.has_receivers_for(receiver_name)
+
 
 def test_plugin_registers():
     """
@@ -27,25 +29,30 @@ def test_plugin_registers():
     register()
     assert_receiver_registered(fancybox_plugin)
 
+
 def test_article_generator_return_article():
     """
     Checks if generator return article
     """
     assert isinstance(mock_article_generator().next(), Article)
 
+
 def test_given_article_generator_check_article_content_exists():
     "Checks if article content field exists in article"
     for article in mock_article_generator():
         assert hasattr(article, '_content')
+
 
 def test_given_article_with_fancybox_find_fancybox_element():
     "Checks for finding fancybox element in article"
     article = Article('Data data data\n <{}>TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
     assert find_fancybox_element(article)
 
+
 def assert_replace(article, expected):
     "Asserts replace equals expected"
     assert replace(article) == expected
+
 
 def test_given_article_with_fancybox_replace():
     "Checks if Replace method makes replacement of <fancybox></fancybox>element into <a class='fancybox_group'></a> "
@@ -53,6 +60,7 @@ def test_given_article_with_fancybox_replace():
     article = Article('Data data data\n <{} href="URL">TEST</{}>\ndata data data'.format(FANCYBOXNAME, FANCYBOXNAME))
     expected = 'Data data data\n <a class="{}" href="URL">TEST</a>\ndata data data'.format(CLASS_SELECTOR)
     assert_replace(article, expected)
+
 
 def test_given_multiple_fancybox_elements_in_article_replace():
     "Checks if multiple fancybox elements will be replaced with fancybox-type engine element"
@@ -63,15 +71,18 @@ def test_given_multiple_fancybox_elements_in_article_replace():
 
     assert_replace(article, expected)
 
+
 def test_no_fancybox_element_in_article_no_replacing():
     "Check if no fancybox element in article, no elements in article will be replaced"
     article = Article('Data data data\n <a href="URL">TEST</a>\ndata data data')
     expected = 'Data data data\n <a href="URL">TEST</a>\ndata data data'
     assert_replace(article, expected)
 
+
 def assert_dependency(actual, expected):
     "add_dependency assertion"
     assert str(add_dependency(actual)._content) == str(expected._content)
+
 
 def test_given_article_add_dependency():
     "Checks if article contains css element after using 'add_css' function - only if fancybox element exists"
@@ -87,6 +98,7 @@ def test_given_article_add_dependency():
 
     assert_dependency(article, expected)
 
+
 def test_given_article_without_fancybox_no_dependency():
     "Checks if article does not contain fancybox element, dependency is not added to content"
     article_content = 'Data data data data <img src="tralalala"/>'
@@ -95,6 +107,7 @@ def test_given_article_without_fancybox_no_dependency():
     expected = Article(expected_content)
 
     assert_dependency(article, expected)
+
 
 def test_given_article_add_binding_fancyboxscript():
     "Checks if article contains javascript binding between name of class and fancybox script"
@@ -108,16 +121,19 @@ def test_given_article_add_binding_fancyboxscript():
     expected = Article(expected_content)
     assert str(add_binding_fancyboxscript(article)._content) == str(expected._content)
 
+
 def test_given_no_fancyboxelement_no_add_binding_fancyboxscript():
     "Expectes not adding fancybox script if no fancybox element found in article"
     article = Article('Data data data data <img src="tralalala"/>')
     expected = Article('Data data data data <img src="tralalala"/>')
     assert str(add_binding_fancyboxscript(article)._content) == str(expected._content)
 
+
 class MockedGenerator(object):
 
     def __init__(self, article):
         self.articles = [article]
+
 
 def test_fancybox_plugin():
 
