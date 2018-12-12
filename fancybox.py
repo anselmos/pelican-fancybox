@@ -10,15 +10,18 @@ DEPS_CSS_FANXYBOX_URL = "https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/
 
 JS_BIDING_CONTENT = '$(document).ready(function() {$("a.'+CLASS_SELECTOR+'").fancybox({\'hideOnContentClick\': true});});'
 
+
 class Article(object):
     "A simple Article class"
     def __init__(self, content = ""):
         self._content = content
 
+
 def find_fancybox_element(article):
     'Uses BeautifulSoup to find all fancybox elements'
     soup = BeautifulSoup(article._content, 'html.parser')
     return soup.find_all(FANCYBOXNAME), soup
+
 
 def fancybox_plugin(generator):
     "Fanxybox plugin - temporary code placement"
@@ -26,6 +29,7 @@ def fancybox_plugin(generator):
         article._content = add_dependency(article)._content
         article._content = add_binding_fancyboxscript(article)._content
         article._content = replace(article)
+
 
 def replace(article):
     "Replaces fancybox tag with <a class='fancybox'></a>"
@@ -35,6 +39,7 @@ def replace(article):
         fancybox.name = TAG_REPLACEMENT
         fancybox['class'] = CLASS_SELECTOR
     return str(soup)
+
 
 def add_dependency(article):
     'Adds CSS/JS dependency to article only if article contains fancybox element'
@@ -55,6 +60,7 @@ def add_dependency(article):
     article._content = content + article._content
     return article
 
+
 def add_binding_fancyboxscript(article):
     "Adds biding for fancybox script with class selector"
     if not find_fancybox_element(article)[0]:
@@ -64,6 +70,7 @@ def add_binding_fancyboxscript(article):
     binding += "</script>"
     article._content = article._content + binding
     return article
+
 
 def register():
     "Registers plugin"
