@@ -10,7 +10,6 @@ from fancybox import FANCYBOXNAME, CLASS_SELECTOR, DEPS_JS_JQUERY_URL, DEPS_JS_F
 from fancybox import replace
 from fancybox import add_dependency
 from fancybox import add_binding_fancyboxscript
-from fancybox import fancybox_plugin
 
 
 def mock_article_generator():
